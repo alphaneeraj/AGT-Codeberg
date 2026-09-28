@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Airlines Group Travel Blog</title>
+  <link>https://airlinesgrouptravel.codeberg.page/blog/</link>
+  <description>Group travel tips, airline group booking guides and planning advice for teams, weddings, companies and schools from Airlines Group Travel.</description>
+  <language>en-us</language>
+  <atom:link href="https://airlinesgrouptravel.codeberg.page/blog/feed.xml" rel="self" type="application/rss+xml"/>
+</channel>
+</rss>

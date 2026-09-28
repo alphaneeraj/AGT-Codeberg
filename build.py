@@ -942,6 +942,20 @@ def sitemap_blog_initial():
 """
 
 
+def feed_initial():
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>{SITE['name']} Blog</title>
+  <link>{SITE['url']}/blog/</link>
+  <description>{html.escape(BLOG_PAGE['desc'])}</description>
+  <language>en-us</language>
+  <atom:link href="{SITE['url']}/blog/feed.xml" rel="self" type="application/rss+xml"/>
+</channel>
+</rss>
+"""
+
+
 def robots():
     ai_bots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "Claude-User",
                "PerplexityBot", "Perplexity-User", "Google-Extended", "Applebot-Extended", "Bingbot", "CCBot"]
@@ -1106,6 +1120,7 @@ def main():
     # Blog pages are owned by the admin; only create starters on first build.
     write_if_missing("blog/posts.json", "[]\n")
     write_if_missing("sitemap-blog.xml", sitemap_blog_initial())
+    write_if_missing("blog/feed.xml", feed_initial())
     write_if_missing("blog/index.html", blog_index_template()
                      .replace("{{POST_LIST}}", '<p class="empty">No posts yet. Check back soon!</p>')
                      .replace("{{BLOG_JSONLD}}", "{}"))
