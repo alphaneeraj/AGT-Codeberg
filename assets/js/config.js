@@ -5,7 +5,7 @@
  * opening an email to the address below.
  */
 window.AGT_CONFIG = {
-  leadsEndpoint: "",
+  leadsEndpoint: "https://script.google.com/macros/s/AKfycbxFFUzm6765GPehOl5NEBzXdLhXCDbs76YWH0SwRx2rx_9cSRrjiRvC2Z5sP_GFYitUdA/exec",
   email: "info@airlinesgrouptravel.com",
   phone: "+1-888-609-1015"
 };
