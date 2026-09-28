@@ -525,11 +525,17 @@ def schema_graph(page):
     return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, indent=1)
 
 
+def nav_items():
+    items = [(p["path"], p["nav"]) for p in PAGES if p["nav"]]
+    items.insert(len(items) - 1, ("blog/", "Blog"))  # before Contact
+    return items
+
+
 def header(active_path):
     current = ' aria-current="page"'
     links = "".join(
-        f'<li><a href="/{p["path"]}"{current if p["path"] == active_path else ""}>{p["nav"]}</a></li>'
-        for p in PAGES if p["nav"])
+        f'<li><a href="/{path}"{current if path == active_path else ""}>{label}</a></li>'
+        for path, label in nav_items())
     return f"""<a class="skip" href="#main">Skip to content</a>
 <div class="topbar"><div class="wrap"><span class="tagline">✈️ Group bookings for 10+ travelers · 24/7</span><a href="tel:{SITE['phone_tel']}">📞 {SITE['phone']}</a></div></div>
 <header class="site-header">
@@ -565,7 +571,7 @@ def footer():
       </div>
       <div>
         <h2>Company</h2>
-        <ul><li><a href="/">Home</a></li><li><a href="/group-flights/">Group Flights</a></li><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li></ul>
+        <ul><li><a href="/">Home</a></li><li><a href="/group-flights/">Group Flights</a></li><li><a href="/about/">About Us</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact</a></li></ul>
       </div>
       <div>
         <h2>Help</h2>
@@ -587,9 +593,12 @@ def footer():
 <a class="btn btn-primary float-call" href="tel:{SITE['phone_tel']}">📞 Call {SITE['phone']} (24/7)</a>"""
 
 
-def head(page, robots="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1", schema=True, canonical=True):
+def head(page, robots="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1", schema=True,
+         canonical=True, og_type="website", image=None, image_alt=None, extra=""):
     url = abs_url(page["path"])
-    img = abs_url("assets/img/og-image.png")
+    img = image or abs_url("assets/img/og-image.png")
+    alt = image_alt or f"{SITE['name']} – group flights for 10+ travelers, call {SITE['phone']}"
+    dims = "" if image else '\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">'
     verify = "".join(
         f'\n<meta name="{n}" content="{SITE[k]}">' for n, k in
         [("google-site-verification", "google_site_verification"), ("msvalidate.01", "bing_site_verification"),
@@ -613,16 +622,14 @@ def head(page, robots="index, follow, max-image-preview:large, max-snippet:-1, m
 <meta name="geo.region" content="US-DE">
 <meta name="geo.placename" content="Dover">{verify}
 <!-- Open Graph -->
-<meta property="og:type" content="website">
+<meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="{SITE['name']}">
 <meta property="og:locale" content="{SITE['locale']}">
 <meta property="og:title" content="{t}">
 <meta property="og:description" content="{d}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{img}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="{SITE['name']} – group flights for 10+ travelers, call {SITE['phone']}">
+<meta property="og:image" content="{img}">{dims}
+<meta property="og:image:alt" content="{alt}">
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="{SITE['twitter']}">
@@ -630,7 +637,7 @@ def head(page, robots="index, follow, max-image-preview:large, max-snippet:-1, m
 <meta name="twitter:title" content="{t}">
 <meta name="twitter:description" content="{d}">
 <meta name="twitter:image" content="{img}">
-<meta name="twitter:image:alt" content="{SITE['name']} – group flights for 10+ travelers">
+<meta name="twitter:image:alt" content="{alt}">
 <!-- Icons -->
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -639,17 +646,18 @@ def head(page, robots="index, follow, max-image-preview:large, max-snippet:-1, m
 <!-- AI / discovery -->
 <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM summary">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="alternate" type="application/rss+xml" title="{SITE['name']} Blog" href="/blog/feed.xml">
 <link rel="author" href="/humans.txt">
 <link rel="stylesheet" href="/assets/css/style.css?v={V}">
-{f'<script type="application/ld+json">{schema_graph(page)}</script>' if schema else ''}
+{f'<script type="application/ld+json">{schema_graph(page)}</script>' if schema else ''}{extra}
 </head>"""
 
 
-def render(page):
+def render(page, extra=""):
     hero = "" if not page.get("h1") else (
         f'<section class="page-hero"><div class="wrap"><h1>{html.escape(page["h1"])}</h1>'
         f'<p>{html.escape(page.get("lead", ""))}</p></div></section>')
-    return f"""{head(page)}
+    return f"""{head(page, extra=extra)}
 <body>
 {header(page['path'])}
 {breadcrumbs(page)}
@@ -674,7 +682,7 @@ def render_404():
 <section class="page-hero"><div class="wrap"><h1>Page not found</h1><p>The page you are looking for doesn't exist or has moved.</p></div></section>
 <section class="block"><div class="wrap prose">
 <p>Try one of these instead:</p>
-<ul><li><a href="/">Home</a></li><li><a href="/group-flights/">Group flight services</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Contact us</a></li></ul>
+<ul><li><a href="/">Home</a></li><li><a href="/group-flights/">Group flight services</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact/">Contact us</a></li></ul>
 <p>Or call us 24/7 at <a href="tel:{SITE['phone_tel']}">{SITE['phone']}</a>.</p>
 </div></section>
 </main>
@@ -686,15 +694,22 @@ def render_404():
 
 
 def render_admin():
-    page = {"path": "admin/", "title": "Leads Admin | Airlines Group Travel", "desc": "Private admin area."}
-    return f"""{head(page, robots="noindex, nofollow, noarchive", schema=False, canonical=False)}
-<body>
+    page = {"path": "admin/", "title": "Admin | Airlines Group Travel", "desc": "Private admin area."}
+    quill = ('\n<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">'
+             '\n<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>')
+    return f"""{head(page, robots="noindex, nofollow, noarchive", schema=False, canonical=False, extra=quill)}
+<body class="admin">
 <main id="main" class="wrap" style="padding-top:28px;padding-bottom:40px">
-  <a class="brand" href="/">{LOGO_SVG}<span>{SITE['name']} · Leads admin</span></a>
-  <p class="form-status" id="admin-msg" role="status" aria-live="polite"></p>
+  <a class="brand" href="/">{LOGO_SVG}<span>{SITE['name']} · Admin</span></a>
+  <div class="tabs" role="tablist">
+    <button class="tab active" role="tab" aria-selected="true" data-tab="tab-leads" type="button">📥 Leads</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="tab-blog" type="button">📝 Blog</button>
+  </div>
 
+  <div id="tab-leads" class="tab-panel">
+  <p class="form-status" id="admin-msg" role="status" aria-live="polite"></p>
   <section id="login" class="card" style="max-width:420px;margin-top:16px">
-    <h1 style="font-size:1.4rem">Sign in</h1>
+    <h1 style="font-size:1.4rem">Sign in to leads</h1>
     <form id="login-form">
       <label for="admin-key">Admin key</label>
       <input id="admin-key" type="password" autocomplete="current-password" required>
@@ -710,7 +725,7 @@ def render_admin():
       <div><label for="filter-status">Status</label><select id="filter-status"><option value="">All</option></select></div>
       <button class="btn btn-navy" id="refresh" type="button">Refresh</button>
       <button class="btn btn-primary" id="export" type="button">Export CSV</button>
-      <button class="btn" id="logout" type="button" style="border-color:var(--line)">Sign out</button>
+      <button class="btn btn-ghost" id="logout" type="button">Sign out</button>
     </div>
     <div class="table-wrap">
       <table class="leads">
@@ -719,19 +734,183 @@ def render_admin():
       </table>
     </div>
   </section>
+  </div>
+
+  <div id="tab-blog" class="tab-panel hidden">
+  <p class="form-status" id="blog-msg" role="status" aria-live="polite"></p>
+  <section id="blog-login" class="card" style="max-width:520px;margin-top:16px">
+    <h1 style="font-size:1.4rem">Connect the blog to Codeberg</h1>
+    <form id="blog-login-form">
+      <label for="forge-token">Codeberg access token</label>
+      <input id="forge-token" type="password" autocomplete="off" required placeholder="Token with repository: Read and write">
+      <button class="btn btn-navy" style="margin-top:12px" type="submit">Connect</button>
+    </form>
+    <p class="note" style="margin-top:12px">Publishing commits straight to the <code>pages</code> repo on Codeberg, and the live site updates within a minute or two. Create a token in Codeberg → Settings → Applications. The token is kept only in this browser tab.</p>
+  </section>
+
+  <section id="blog-list" class="hidden">
+    <div class="admin-bar">
+      <button class="btn btn-primary" id="post-new" type="button">+ New post</button>
+      <button class="btn btn-navy" id="blog-rebuild" type="button">Rebuild all pages</button>
+      <a class="btn btn-ghost" href="/blog/" target="_blank" rel="noopener">View blog ↗</a>
+      <button class="btn btn-ghost" id="blog-logout" type="button">Disconnect</button>
+    </div>
+    <div class="table-wrap">
+      <table class="leads" style="min-width:720px">
+        <thead><tr><th>Title</th><th>Status</th><th>Date</th><th>Updated</th><th></th></tr></thead>
+        <tbody id="posts-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="blog-editor" class="hidden">
+    <div class="editor-grid">
+      <div>
+        <label for="p-title">Title *</label>
+        <input id="p-title" maxlength="140" placeholder="e.g. How to Book Group Flights for a Sports Team">
+        <div class="field-row">
+          <div><label for="p-slug">URL slug *</label><input id="p-slug" pattern="[a-z0-9-]+" placeholder="how-to-book-group-flights"></div>
+        </div>
+        <p class="note" id="p-url"></p>
+        <label>Content *</label>
+        <div id="p-editor"></div>
+      </div>
+      <aside class="editor-side">
+        <div class="card">
+          <label for="p-desc">Meta description * <span class="note" id="p-desc-count"></span></label>
+          <textarea id="p-desc" maxlength="200" placeholder="150–160 characters summarising the post for Google"></textarea>
+          <label for="p-date" style="margin-top:10px">Publish date</label>
+          <input id="p-date" type="date">
+          <label for="p-author" style="margin-top:10px">Author</label>
+          <input id="p-author">
+          <label for="p-tags" style="margin-top:10px">Tags (comma separated)</label>
+          <input id="p-tags" placeholder="group travel, sports teams">
+          <label for="p-cover" style="margin-top:10px">Featured image</label>
+          <input id="p-cover" type="file" accept="image/*">
+          <img id="p-cover-preview" class="cover-preview hidden" alt="">
+          <button class="btn btn-ghost btn-sm hidden" id="p-cover-remove" type="button">Remove image</button>
+          <label for="p-cover-alt" style="margin-top:10px">Image alt text</label>
+          <input id="p-cover-alt" placeholder="Describe the image">
+        </div>
+        <div class="card seo-check" id="seo-check"></div>
+        <div class="editor-actions">
+          <button class="btn btn-primary" id="p-publish" type="button">Publish</button>
+          <button class="btn btn-navy" id="p-draft" type="button">Save as draft</button>
+          <button class="btn btn-ghost" id="p-cancel" type="button">Back to posts</button>
+          <button class="btn btn-danger hidden" id="p-delete" type="button">Delete post</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+  </div>
 </main>
 <script src="/assets/js/config.js?v={V}"></script>
 <script src="/assets/js/admin.js?v={V}" defer></script>
+<script src="/assets/js/blog-admin.js?v={V}" defer></script>
 </body>
 </html>
 """
 
 
 # ---------------------------------------------------------------------------
+# Blog templates. The admin (assets/js/blog-admin.js) fills the {{PLACEHOLDERS}}
+# and commits the resulting pages to Codeberg. After changing the layout here,
+# push, then click "Rebuild all pages" in /admin/ → Blog.
+# ---------------------------------------------------------------------------
+
+BLOG_PAGE = {"path": "blog/", "nav": None, "title": "Group Travel Blog – Tips & Guides | Airlines Group Travel",
+             "h1": "Group Travel Blog", "type": "CollectionPage",
+             "lead": "Tips, airline group-booking guides and ideas for planning trips for 10+ travelers.",
+             "desc": "Group travel tips, airline group booking guides and planning advice for teams, weddings, companies and schools from Airlines Group Travel.",
+             "body": """
+<section class="block">
+  <div class="wrap">
+    <div class="grid post-grid">{{POST_LIST}}</div>
+  </div>
+</section>""", "priority": "0.8"}
+
+
+def post_template():
+    page = {"path": "blog/{{SLUG}}/", "title": "{{TITLE}}", "desc": "{{DESC}}"}
+    extra = """
+<meta property="article:published_time" content="{{PUBLISHED_ISO}}">
+<meta property="article:modified_time" content="{{MODIFIED_ISO}}">
+<meta property="article:author" content="{{AUTHOR}}">{{ARTICLE_TAGS}}
+<script type="application/ld+json">{{JSONLD}}</script>"""
+    return f"""{head(page, schema=False, og_type="article", image="{{IMAGE}}", image_alt="{{IMAGE_ALT}}", extra=extra)}
+<body>
+{header('blog/')}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><div class="wrap"><ol><li><a href="{SITE['url']}/">Home</a></li><li><a href="{SITE['url']}/blog/">Blog</a></li><li aria-current="page">{{{{H1}}}}</li></ol></div></nav>
+<main id="main">
+<article class="post">
+  <header class="page-hero"><div class="wrap narrow">
+    <p class="post-kicker">{{{{KICKER}}}}</p>
+    <h1>{{{{H1}}}}</h1>
+    <p class="post-meta">By {{{{AUTHOR}}}} · <time datetime="{{{{PUBLISHED_ISO}}}}">{{{{DATE_HUMAN}}}}</time>{{{{UPDATED_HTML}}}} · {{{{READ_MIN}}}} min read</p>
+  </div></header>
+  <div class="wrap narrow post-wrap">
+    {{{{COVER}}}}
+    <div class="prose post-body">
+{{{{CONTENT}}}}
+    </div>
+    {{{{TAGS_HTML}}}}
+    <aside class="card post-cta">
+      <h2>Planning group travel?</h2>
+      <p>Get a free group flight quote for 10+ travelers from our specialists, 24/7.</p>
+      <p><a class="btn btn-primary" href="tel:{SITE['phone_tel']}">📞 Call {SITE['phone']}</a> <a class="btn btn-navy" href="/contact/#quote">Request a quote</a></p>
+    </aside>
+  </div>
+</article>
+{{{{RELATED}}}}
+</main>
+{footer()}
+<script src="/assets/js/config.js?v={V}" defer></script>
+<script src="/assets/js/main.js?v={V}" defer></script>
+</body>
+</html>
+"""
+
+
+def blog_index_template():
+    extra = '\n<script type="application/ld+json">{{BLOG_JSONLD}}</script>'
+    return render(BLOG_PAGE, extra=extra)
+
+
+def site_json():
+    return json.dumps({
+        "url": SITE["url"], "name": SITE["name"], "legal_name": SITE["legal_name"],
+        "phone": SITE["phone"], "email": SITE["email"], "default_author": f"{SITE['name']} Team",
+        "default_image": abs_url("assets/img/og-image.png"), "logo": abs_url("assets/img/logo-512.png"),
+        "org_id": ORG_ID, "website_id": WEBSITE_ID, "org": org_node(),
+        "blog_title": BLOG_PAGE["h1"], "blog_desc": BLOG_PAGE["desc"],
+    }, indent=1, ensure_ascii=False) + "\n"
+
+
+def load_posts():
+    try:
+        posts = json.loads((ROOT / "blog" / "posts.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    return sorted((p for p in posts if p.get("status") == "published"), key=lambda p: p.get("date", ""), reverse=True)
+
+
+# These two must produce the same text as blogList()/blogFull() in assets/js/blog-admin.js.
+def blog_llms_list(posts):
+    if not posts:
+        return "- No posts published yet."
+    return "\n".join(f"- [{p['title']}]({abs_url('blog/' + p['slug'] + '/')}): {p['description']}" for p in posts)
+
+
+def blog_llms_full(posts):
+    return "".join(f"\n---\n\n## {p['title']}\n\nURL: {abs_url('blog/' + p['slug'] + '/')}\nPublished: {p['date']}\n\n{text_of(p['content'])}\n"
+                   for p in posts)
+
+
+# ---------------------------------------------------------------------------
 # Machine-readable files
 # ---------------------------------------------------------------------------
 
-def sitemap():
+def sitemap_pages():
     urls = "".join(f"""
   <url>
     <loc>{abs_url(p['path'])}</loc>
@@ -742,6 +921,23 @@ def sitemap():
   </url>""" for p in PAGES)
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">{urls}
+</urlset>
+"""
+
+
+def sitemap_index():
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>{SITE['url']}/sitemap-pages.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>{SITE['url']}/sitemap-blog.xml</loc></sitemap>
+</sitemapindex>
+"""
+
+
+def sitemap_blog_initial():
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>{SITE['url']}/blog/</loc><lastmod>{TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
 """
 
@@ -757,12 +953,14 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /backend/
+Disallow: /_templates/
 
 # AI crawlers are welcome, so our group travel info can be cited accurately
 {ai}
 Allow: /
 Disallow: /admin/
 Disallow: /backend/
+Disallow: /_templates/
 
 Sitemap: {SITE['url']}/sitemap.xml
 """
@@ -806,10 +1004,16 @@ Key facts:
 
 {pages}
 
+## Blog
+
+- [Group Travel Blog]({SITE['url']}/blog/): {BLOG_PAGE['desc']}
+{{{{BLOG_LIST}}}}
+
 ## Optional
 
 - [Full site content for LLMs]({SITE['url']}/llms-full.txt): all page text in one file
 - [Main website]({SITE['parent_url']}/): deals, destinations, routes and travel blog
+- [Blog RSS feed]({SITE['url']}/blog/feed.xml)
 - [Sitemap]({SITE['url']}/sitemap.xml)
 """
 
@@ -822,6 +1026,7 @@ def llms_full_txt():
                  f"- Phone (24/7): {SITE['phone']}\n- Email: {SITE['email']}\n- Main website: {SITE['parent_url']}/\n"
                  + "".join(f"- {n}: {u}\n" for n, u in SITE['social'])
                  + f"\n## Disclaimer\n\n{DISCLAIMER}\n")
+    parts.append("\n---\n\n# Blog posts\n{{BLOG_FULL}}")
     return "".join(parts)
 
 
@@ -870,18 +1075,40 @@ def write(rel, content):
     print("wrote", rel)
 
 
+def write_if_missing(rel, content):
+    if not (ROOT / rel).exists():
+        write(rel, content)
+
+
 def main():
     for p in PAGES:
         write((p["path"] or "") + "index.html", render(p))
     write("404.html", render_404())
     write("admin/index.html", render_admin())
-    write("sitemap.xml", sitemap())
+    write("sitemap.xml", sitemap_index())
+    write("sitemap-pages.xml", sitemap_pages())
     write("robots.txt", robots())
-    write("llms.txt", llms_txt())
-    write("llms-full.txt", llms_full_txt())
     write("site.webmanifest", manifest())
     write("humans.txt", humans())
     write(".well-known/security.txt", security())
+
+    # Blog: templates for the admin, plus llms files filled with current posts.
+    posts = load_posts()
+    llms_tpl, full_tpl = llms_txt(), llms_full_txt()
+    write("_templates/post.html", post_template())
+    write("_templates/blog-index.html", blog_index_template())
+    write("_templates/llms.txt", llms_tpl)
+    write("_templates/llms-full.txt", full_tpl)
+    write("_templates/site.json", site_json())
+    write("llms.txt", llms_tpl.replace("{{BLOG_LIST}}", blog_llms_list(posts)))
+    write("llms-full.txt", full_tpl.replace("{{BLOG_FULL}}", blog_llms_full(posts)))
+
+    # Blog pages are owned by the admin; only create starters on first build.
+    write_if_missing("blog/posts.json", "[]\n")
+    write_if_missing("sitemap-blog.xml", sitemap_blog_initial())
+    write_if_missing("blog/index.html", blog_index_template()
+                     .replace("{{POST_LIST}}", '<p class="empty">No posts yet. Check back soon!</p>')
+                     .replace("{{BLOG_JSONLD}}", "{}"))
 
 
 if __name__ == "__main__":

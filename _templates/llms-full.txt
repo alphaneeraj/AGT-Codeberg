@@ -417,3 +417,4 @@ Airlines Group Travel is an independent travel agency operated by Airfare Servic
 ---
 
 # Blog posts
+{{BLOG_FULL}}

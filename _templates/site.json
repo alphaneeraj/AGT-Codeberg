@@ -1,0 +1,113 @@
+{
+ "url": "https://airlinesgrouptravel.codeberg.page",
+ "name": "Airlines Group Travel",
+ "legal_name": "Airfare Services USA LLC",
+ "phone": "+1-888-609-1015",
+ "email": "info@airlinesgrouptravel.com",
+ "default_author": "Airlines Group Travel Team",
+ "default_image": "https://airlinesgrouptravel.codeberg.page/assets/img/og-image.png",
+ "logo": "https://airlinesgrouptravel.codeberg.page/assets/img/logo-512.png",
+ "org_id": "https://airlinesgrouptravel.codeberg.page/#organization",
+ "website_id": "https://airlinesgrouptravel.codeberg.page/#website",
+ "org": {
+  "@type": "TravelAgency",
+  "@id": "https://airlinesgrouptravel.codeberg.page/#organization",
+  "name": "Airlines Group Travel",
+  "alternateName": "AGT",
+  "legalName": "Airfare Services USA LLC",
+  "url": "https://airlinesgrouptravel.codeberg.page/",
+  "logo": {
+   "@type": "ImageObject",
+   "url": "https://airlinesgrouptravel.codeberg.page/assets/img/logo-512.png",
+   "width": 512,
+   "height": 512
+  },
+  "image": "https://airlinesgrouptravel.codeberg.page/assets/img/og-image.png",
+  "description": "Airlines Group Travel books discounted group flights for 10 or more passengers on domestic and international routes, with 24/7 support from group travel specialists. Call +1-888-609-1015 for a free group quote.",
+  "foundingDate": "2022",
+  "telephone": "+1-888-609-1015",
+  "email": "info@airlinesgrouptravel.com",
+  "priceRange": "$$",
+  "address": {
+   "@type": "PostalAddress",
+   "streetAddress": "8 The Green, Suite A",
+   "addressLocality": "Dover",
+   "addressRegion": "DE",
+   "postalCode": "19901",
+   "addressCountry": "US"
+  },
+  "areaServed": [
+   {
+    "@type": "Country",
+    "name": "United States"
+   },
+   {
+    "@type": "Place",
+    "name": "Worldwide"
+   }
+  ],
+  "openingHoursSpecification": {
+   "@type": "OpeningHoursSpecification",
+   "dayOfWeek": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+   ],
+   "opens": "00:00",
+   "closes": "23:59"
+  },
+  "contactPoint": [
+   {
+    "@type": "ContactPoint",
+    "telephone": "+1-888-609-1015",
+    "email": "info@airlinesgrouptravel.com",
+    "contactType": "reservations",
+    "areaServed": [
+     "US",
+     "CA"
+    ],
+    "availableLanguage": [
+     "English"
+    ],
+    "hoursAvailable": {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+     ],
+     "opens": "00:00",
+     "closes": "23:59"
+    }
+   }
+  ],
+  "sameAs": [
+   "https://www.airlinesgrouptravel.com/",
+   "https://www.facebook.com/airgrouptravel",
+   "https://x.com/airgrouptravel",
+   "https://www.instagram.com/airgrouptravel/",
+   "https://www.linkedin.com/company/airlines-group-travel",
+   "https://www.youtube.com/@airlinesgrouptravel",
+   "https://www.pinterest.com/airlinesgrouptravel/"
+  ],
+  "knowsAbout": [
+   "Group flight booking",
+   "Group airfare",
+   "Corporate travel",
+   "Sports team travel",
+   "Destination wedding travel",
+   "Student group travel",
+   "Business class flights"
+  ]
+ },
+ "blog_title": "Group Travel Blog",
+ "blog_desc": "Group travel tips, airline group booking guides and planning advice for teams, weddings, companies and schools from Airlines Group Travel."
+}

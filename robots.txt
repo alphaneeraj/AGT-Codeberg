@@ -5,6 +5,7 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /backend/
+Disallow: /_templates/
 
 # AI crawlers are welcome, so our group travel info can be cited accurately
 User-agent: GPTBot
@@ -22,5 +23,6 @@ User-agent: CCBot
 Allow: /
 Disallow: /admin/
 Disallow: /backend/
+Disallow: /_templates/
 
 Sitemap: https://airlinesgrouptravel.codeberg.page/sitemap.xml

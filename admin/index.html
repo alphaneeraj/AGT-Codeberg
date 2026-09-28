@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leads Admin | Airlines Group Travel</title>
+<title>Admin | Airlines Group Travel</title>
 <meta name="description" content="Private admin area.">
 <meta name="robots" content="noindex, nofollow, noarchive">
 
@@ -19,7 +19,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Airlines Group Travel">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Leads Admin | Airlines Group Travel">
+<meta property="og:title" content="Admin | Airlines Group Travel">
 <meta property="og:description" content="Private admin area.">
 <meta property="og:url" content="https://airlinesgrouptravel.codeberg.page/admin/">
 <meta property="og:image" content="https://airlinesgrouptravel.codeberg.page/assets/img/og-image.png">
@@ -30,10 +30,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@airgrouptravel">
 <meta name="twitter:creator" content="@airgrouptravel">
-<meta name="twitter:title" content="Leads Admin | Airlines Group Travel">
+<meta name="twitter:title" content="Admin | Airlines Group Travel">
 <meta name="twitter:description" content="Private admin area.">
 <meta name="twitter:image" content="https://airlinesgrouptravel.codeberg.page/assets/img/og-image.png">
-<meta name="twitter:image:alt" content="Airlines Group Travel – group flights for 10+ travelers">
+<meta name="twitter:image:alt" content="Airlines Group Travel – group flights for 10+ travelers, call +1-888-609-1015">
 <!-- Icons -->
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -42,17 +42,25 @@
 <!-- AI / discovery -->
 <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM summary">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="alternate" type="application/rss+xml" title="Airlines Group Travel Blog" href="/blog/feed.xml">
 <link rel="author" href="/humans.txt">
-<link rel="stylesheet" href="/assets/css/style.css?v=2326ac5e">
+<link rel="stylesheet" href="/assets/css/style.css?v=78221905">
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 </head>
-<body>
+<body class="admin">
 <main id="main" class="wrap" style="padding-top:28px;padding-bottom:40px">
-  <a class="brand" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b3d91"/><path fill="#fff" transform="rotate(45 32 32)" d="M32 6l3 5v15l23 14v5l-23-7v14l7 6v4l-10-3-10 3v-4l7-6V38L6 45v-5l23-14V11z"/><circle cx="50" cy="50" r="5" fill="#ffb400"/></svg><span>Airlines Group Travel · Leads admin</span></a>
-  <p class="form-status" id="admin-msg" role="status" aria-live="polite"></p>
+  <a class="brand" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b3d91"/><path fill="#fff" transform="rotate(45 32 32)" d="M32 6l3 5v15l23 14v5l-23-7v14l7 6v4l-10-3-10 3v-4l7-6V38L6 45v-5l23-14V11z"/><circle cx="50" cy="50" r="5" fill="#ffb400"/></svg><span>Airlines Group Travel · Admin</span></a>
+  <div class="tabs" role="tablist">
+    <button class="tab active" role="tab" aria-selected="true" data-tab="tab-leads" type="button">📥 Leads</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="tab-blog" type="button">📝 Blog</button>
+  </div>
 
+  <div id="tab-leads" class="tab-panel">
+  <p class="form-status" id="admin-msg" role="status" aria-live="polite"></p>
   <section id="login" class="card" style="max-width:420px;margin-top:16px">
-    <h1 style="font-size:1.4rem">Sign in</h1>
+    <h1 style="font-size:1.4rem">Sign in to leads</h1>
     <form id="login-form">
       <label for="admin-key">Admin key</label>
       <input id="admin-key" type="password" autocomplete="current-password" required>
@@ -68,7 +76,7 @@
       <div><label for="filter-status">Status</label><select id="filter-status"><option value="">All</option></select></div>
       <button class="btn btn-navy" id="refresh" type="button">Refresh</button>
       <button class="btn btn-primary" id="export" type="button">Export CSV</button>
-      <button class="btn" id="logout" type="button" style="border-color:var(--line)">Sign out</button>
+      <button class="btn btn-ghost" id="logout" type="button">Sign out</button>
     </div>
     <div class="table-wrap">
       <table class="leads">
@@ -77,8 +85,78 @@
       </table>
     </div>
   </section>
+  </div>
+
+  <div id="tab-blog" class="tab-panel hidden">
+  <p class="form-status" id="blog-msg" role="status" aria-live="polite"></p>
+  <section id="blog-login" class="card" style="max-width:520px;margin-top:16px">
+    <h1 style="font-size:1.4rem">Connect the blog to Codeberg</h1>
+    <form id="blog-login-form">
+      <label for="forge-token">Codeberg access token</label>
+      <input id="forge-token" type="password" autocomplete="off" required placeholder="Token with repository: Read and write">
+      <button class="btn btn-navy" style="margin-top:12px" type="submit">Connect</button>
+    </form>
+    <p class="note" style="margin-top:12px">Publishing commits straight to the <code>pages</code> repo on Codeberg, and the live site updates within a minute or two. Create a token in Codeberg → Settings → Applications. The token is kept only in this browser tab.</p>
+  </section>
+
+  <section id="blog-list" class="hidden">
+    <div class="admin-bar">
+      <button class="btn btn-primary" id="post-new" type="button">+ New post</button>
+      <button class="btn btn-navy" id="blog-rebuild" type="button">Rebuild all pages</button>
+      <a class="btn btn-ghost" href="/blog/" target="_blank" rel="noopener">View blog ↗</a>
+      <button class="btn btn-ghost" id="blog-logout" type="button">Disconnect</button>
+    </div>
+    <div class="table-wrap">
+      <table class="leads" style="min-width:720px">
+        <thead><tr><th>Title</th><th>Status</th><th>Date</th><th>Updated</th><th></th></tr></thead>
+        <tbody id="posts-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="blog-editor" class="hidden">
+    <div class="editor-grid">
+      <div>
+        <label for="p-title">Title *</label>
+        <input id="p-title" maxlength="140" placeholder="e.g. How to Book Group Flights for a Sports Team">
+        <div class="field-row">
+          <div><label for="p-slug">URL slug *</label><input id="p-slug" pattern="[a-z0-9-]+" placeholder="how-to-book-group-flights"></div>
+        </div>
+        <p class="note" id="p-url"></p>
+        <label>Content *</label>
+        <div id="p-editor"></div>
+      </div>
+      <aside class="editor-side">
+        <div class="card">
+          <label for="p-desc">Meta description * <span class="note" id="p-desc-count"></span></label>
+          <textarea id="p-desc" maxlength="200" placeholder="150–160 characters summarising the post for Google"></textarea>
+          <label for="p-date" style="margin-top:10px">Publish date</label>
+          <input id="p-date" type="date">
+          <label for="p-author" style="margin-top:10px">Author</label>
+          <input id="p-author">
+          <label for="p-tags" style="margin-top:10px">Tags (comma separated)</label>
+          <input id="p-tags" placeholder="group travel, sports teams">
+          <label for="p-cover" style="margin-top:10px">Featured image</label>
+          <input id="p-cover" type="file" accept="image/*">
+          <img id="p-cover-preview" class="cover-preview hidden" alt="">
+          <button class="btn btn-ghost btn-sm hidden" id="p-cover-remove" type="button">Remove image</button>
+          <label for="p-cover-alt" style="margin-top:10px">Image alt text</label>
+          <input id="p-cover-alt" placeholder="Describe the image">
+        </div>
+        <div class="card seo-check" id="seo-check"></div>
+        <div class="editor-actions">
+          <button class="btn btn-primary" id="p-publish" type="button">Publish</button>
+          <button class="btn btn-navy" id="p-draft" type="button">Save as draft</button>
+          <button class="btn btn-ghost" id="p-cancel" type="button">Back to posts</button>
+          <button class="btn btn-danger hidden" id="p-delete" type="button">Delete post</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+  </div>
 </main>
-<script src="/assets/js/config.js?v=2326ac5e"></script>
-<script src="/assets/js/admin.js?v=2326ac5e" defer></script>
+<script src="/assets/js/config.js?v=78221905"></script>
+<script src="/assets/js/admin.js?v=78221905" defer></script>
+<script src="/assets/js/blog-admin.js?v=78221905" defer></script>
 </body>
 </html>

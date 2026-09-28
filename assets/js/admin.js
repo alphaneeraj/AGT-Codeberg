@@ -5,6 +5,24 @@
   var state = { leads: [], statuses: [] };
 
   var $ = function (id) { return document.getElementById(id); };
+
+  // Tabs (Leads / Blog)
+  document.querySelectorAll(".tab").forEach(function (t) {
+    t.addEventListener("click", function () {
+      document.querySelectorAll(".tab").forEach(function (o) {
+        var on = o === t;
+        o.classList.toggle("active", on);
+        o.setAttribute("aria-selected", on ? "true" : "false");
+        $(o.dataset.tab).classList.toggle("hidden", !on);
+      });
+      try { sessionStorage.setItem("agt_admin_tab", t.dataset.tab); } catch (e) {}
+    });
+  });
+  try {
+    var lastTab = sessionStorage.getItem("agt_admin_tab");
+    var btn = lastTab && document.querySelector('.tab[data-tab="' + lastTab + '"]');
+    if (btn) btn.click();
+  } catch (e) {}
   var loginBox = $("login"), panel = $("panel"), msg = $("admin-msg");
 
   function store(k, v) { try { v === null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); } catch (e) {} }
