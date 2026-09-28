@@ -24,7 +24,7 @@ Key facts:
 ## Blog
 
 - [Group Travel Blog](https://airlinesgrouptravel.codeberg.page/blog/): Group travel tips, airline group booking guides and planning advice for teams, weddings, companies and schools from Airlines Group Travel.
-- No posts published yet.
+- [How Can I Book a Group Flight with Alaska Airlines?](https://airlinesgrouptravel.codeberg.page/blog/how-can-i-book-a-group-flight-with-alaska-airlines/): With Alaska Airlines Group Travel option, passengers can plan an expedition for parties of 10 or more guests traveling together. Learn booking process & terms
 
 ## Optional
 
