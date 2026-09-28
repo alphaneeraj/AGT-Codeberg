@@ -1,0 +1,12 @@
+/* TEAM */
+Company: Airfare Services USA LLC
+Brand: Airlines Group Travel
+Contact: info@airlinesgrouptravel.com
+Phone: +1-888-609-1015
+From: Dover, Delaware, USA
+
+/* SITE */
+Last update: 2026-09-28
+Language: English (en-US)
+Standards: HTML5, CSS3, schema.org JSON-LD
+Hosting: Codeberg Pages

@@ -1,0 +1,28 @@
+# Airlines Group Travel
+
+> Airlines Group Travel books discounted group flights for 10 or more passengers on domestic and international routes, with 24/7 support from group travel specialists. Call +1-888-609-1015 for a free group quote.
+
+Airlines Group Travel (AGT) is an independent US travel agency operated by Airfare Services USA LLC, 8 The Green, Suite A, Dover, DE 19901, USA, established in 2022. It specializes in group air travel (10+ passengers) for sports teams, weddings, corporate events, schools, religious groups and tours, in all cabin classes. It is not an airline and is not affiliated with any airline.
+
+Key facts:
+- Phone (24/7 group reservations): +1-888-609-1015
+- Email: info@airlinesgrouptravel.com
+- Main website: https://www.airlinesgrouptravel.com/
+- This site: https://airlinesgrouptravel.codeberg.page/
+- Services: group flight quotes, group fare comparison across airlines, deposit-based seat holds, name-list management, multi-city and multi-origin groups, business and first-class groups.
+
+## Pages
+
+- [Home](https://airlinesgrouptravel.codeberg.page/): Book discounted group flights for 10+ travelers on major airlines. Sports teams, weddings, corporate & school groups. Free quote 24/7: +1-888-609-1015.
+- [Group flight booking services](https://airlinesgrouptravel.codeberg.page/group-flights/): Group flight booking for teams, weddings, corporate, school and religious groups. Group fares, deposit holds, flexible names. Call +1-888-609-1015.
+- [About Airlines Group Travel](https://airlinesgrouptravel.codeberg.page/about/): Airlines Group Travel is a US group travel agency run by Airfare Services USA LLC in Dover, Delaware, booking group flights since 2022.
+- [Group flight booking FAQ](https://airlinesgrouptravel.codeberg.page/faq/): How many people make a group booking? Can I pay later or add names later? Answers to common group flight questions from Airlines Group Travel.
+- [Contact Airlines Group Travel](https://airlinesgrouptravel.codeberg.page/contact/): Contact Airlines Group Travel for group flight quotes 24/7. Call +1-888-609-1015 or email info@airlinesgrouptravel.com.
+- [Privacy Policy](https://airlinesgrouptravel.codeberg.page/privacy-policy/): Privacy Policy for Airlines Group Travel (Airfare Services USA LLC): what we collect through quote requests and how we use it.
+- [Terms & Conditions](https://airlinesgrouptravel.codeberg.page/terms/): Terms and conditions for using the Airlines Group Travel website and booking group flights through us.
+
+## Optional
+
+- [Full site content for LLMs](https://airlinesgrouptravel.codeberg.page/llms-full.txt): all page text in one file
+- [Main website](https://www.airlinesgrouptravel.com/): deals, destinations, routes and travel blog
+- [Sitemap](https://airlinesgrouptravel.codeberg.page/sitemap.xml)

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leads Admin | Airlines Group Travel</title>
+<meta name="description" content="Private admin area.">
+<meta name="robots" content="noindex, nofollow, noarchive">
+
+<link rel="alternate" hreflang="en-us" href="https://airlinesgrouptravel.codeberg.page/admin/">
+<link rel="alternate" hreflang="x-default" href="https://airlinesgrouptravel.codeberg.page/admin/">
+<meta name="author" content="Airlines Group Travel">
+<meta name="publisher" content="Airfare Services USA LLC">
+<meta name="theme-color" content="#0b3d91">
+<meta name="format-detection" content="telephone=yes">
+<meta name="geo.region" content="US-DE">
+<meta name="geo.placename" content="Dover">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Airlines Group Travel">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Leads Admin | Airlines Group Travel">
+<meta property="og:description" content="Private admin area.">
+<meta property="og:url" content="https://airlinesgrouptravel.codeberg.page/admin/">
+<meta property="og:image" content="https://airlinesgrouptravel.codeberg.page/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Airlines Group Travel – group flights for 10+ travelers, call +1-888-609-1015">
+<!-- Twitter / X card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@airgrouptravel">
+<meta name="twitter:creator" content="@airgrouptravel">
+<meta name="twitter:title" content="Leads Admin | Airlines Group Travel">
+<meta name="twitter:description" content="Private admin area.">
+<meta name="twitter:image" content="https://airlinesgrouptravel.codeberg.page/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="Airlines Group Travel – group flights for 10+ travelers">
+<!-- Icons -->
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<!-- AI / discovery -->
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM summary">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="author" href="/humans.txt">
+<link rel="stylesheet" href="/assets/css/style.css?v=270c7eac">
+
+</head>
+<body>
+<main id="main" class="wrap" style="padding-top:28px;padding-bottom:40px">
+  <a class="brand" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b3d91"/><path fill="#fff" transform="rotate(45 32 32)" d="M32 6l3 5v15l23 14v5l-23-7v14l7 6v4l-10-3-10 3v-4l7-6V38L6 45v-5l23-14V11z"/><circle cx="50" cy="50" r="5" fill="#ffb400"/></svg><span>Airlines Group Travel · Leads admin</span></a>
+  <p class="form-status" id="admin-msg" role="status" aria-live="polite"></p>
+
+  <section id="login" class="card" style="max-width:420px;margin-top:16px">
+    <h1 style="font-size:1.4rem">Sign in</h1>
+    <form id="login-form">
+      <label for="admin-key">Admin key</label>
+      <input id="admin-key" type="password" autocomplete="current-password" required>
+      <button class="btn btn-navy" style="margin-top:12px" type="submit">View leads</button>
+    </form>
+    <p class="note" style="margin-top:12px">The key is checked by the Google Apps Script backend (script property <code>ADMIN_KEY</code>). It is kept only in this browser tab.</p>
+  </section>
+
+  <section id="panel" class="hidden">
+    <div class="stats" id="stats"></div>
+    <div class="admin-bar">
+      <div><label for="search">Search</label><input id="search" type="search" placeholder="Name, email, route, note…"></div>
+      <div><label for="filter-status">Status</label><select id="filter-status"><option value="">All</option></select></div>
+      <button class="btn btn-navy" id="refresh" type="button">Refresh</button>
+      <button class="btn btn-primary" id="export" type="button">Export CSV</button>
+      <button class="btn" id="logout" type="button" style="border-color:var(--line)">Sign out</button>
+    </div>
+    <div class="table-wrap">
+      <table class="leads">
+        <thead><tr><th>Lead</th><th>Contact</th><th>Trip</th><th>Pax / Cabin</th><th>Message</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody id="leads-body"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script src="/assets/js/config.js?v=270c7eac"></script>
+<script src="/assets/js/admin.js?v=270c7eac" defer></script>
+</body>
+</html>
