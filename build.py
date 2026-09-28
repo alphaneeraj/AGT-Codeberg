@@ -58,7 +58,7 @@ SITE = {
         ("Pinterest", "https://www.pinterest.com/airlinesgrouptravel/"),
     ],
     # Paste verification tokens here once you have them (leave "" to omit the tag).
-    "google_site_verification": "",
+    "google_site_verification": "F7lPPv4z4loy0NwRSqUsBDIA8WoyzHlTgQrNpSFmEFA",
     "bing_site_verification": "",
     "yandex_verification": "",
 }
