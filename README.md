@@ -137,13 +137,18 @@ Notes:
 
 The blog admin commits **directly to Codeberg**, so Codeberg becomes the most up-to-date copy.
 
+- Codeberg's git-pages server only deploys the **`pages`** branch, so the site and blog admin use `pages` on Codeberg.
+  Locally the branch is still `main`, and `git push codeberg` is configured to push `main` → `pages`
+  (`git config remote.codeberg.push refs/heads/main:refs/heads/pages`).
+- The Codeberg repo needs a webhook (Settings → Webhooks → Forgejo): Target URL `https://airlinesgrouptravel.codeberg.page`,
+  POST, `application/json`, Push events, Branch filter `pages`.
 - **Before editing locally**, always pull first:
   ```bash
-  git pull codeberg main
+  git pull codeberg pages
   ```
   Then push to both remotes:
   ```bash
-  git push codeberg main && git push origin main
+  git push codeberg && git push origin main
   ```
 - **Recommended: set up an automatic push mirror** so GitHub updates by itself.
   In the Codeberg repo, open **Settings → Repository → Mirror settings → Push mirror** and fill in:
@@ -162,7 +167,7 @@ owned by that user.
 3. From this folder:
    ```bash
    git remote add codeberg https://codeberg.org/airlinesgrouptravel/pages.git
-   git push codeberg main
+   git push codeberg main:pages
    ```
 4. Wait a minute or two, then open https://airlinesgrouptravel.codeberg.page.
 
