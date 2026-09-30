@@ -11,5 +11,5 @@ window.AGT_CONFIG = {
   phone: "+1-888-609-1015",
   forgeApi: "https://codeberg.org/api/v1",
   repo: "airlinesgrouptravel/pages",
-  branch: "main"
+  branch: "pages"
 };

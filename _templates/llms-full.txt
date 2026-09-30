@@ -2,7 +2,7 @@
 
 > Airlines Group Travel books discounted group flights for 10 or more passengers on domestic and international routes, with 24/7 support from group travel specialists. Call +1-888-609-1015 for a free group quote.
 
-Source: https://airlinesgrouptravel.codeberg.page/  ·  Generated: 2026-09-28
+Source: https://airlinesgrouptravel.codeberg.page/  ·  Generated: 2026-09-30
 
 ---
 
@@ -318,7 +318,7 @@ Tell us about your trip. A specialist will reply quickly.
 
 URL: https://airlinesgrouptravel.codeberg.page/privacy-policy/
 
-Last updated: 2026-09-28
+Last updated: 2026-09-30
 
 This Privacy Policy explains how Airfare Services USA LLC ("Airlines Group Travel", "we", "us") collects and uses information on airlinesgrouptravel.codeberg.page.
 
@@ -358,7 +358,7 @@ Airfare Services USA LLC, 8 The Green, Suite A, Dover, DE 19901, USA · +1-888-6
 
 URL: https://airlinesgrouptravel.codeberg.page/terms/
 
-Last updated: 2026-09-28
+Last updated: 2026-09-30
 
 These terms govern your use of airlinesgrouptravel.codeberg.page, operated by Airfare Services USA LLC ("Airlines Group Travel").
 
