@@ -24,6 +24,7 @@ Key facts:
 ## Blog
 
 - [Group Travel Blog](https://airlinesgrouptravel.codeberg.page/blog/): Group travel tips, airline group booking guides and planning advice for teams, weddings, companies and schools from Airlines Group Travel.
+- [How to Book a Flight for a Large Group with PAL?](https://airlinesgrouptravel.codeberg.page/blog/how-to-book-a-flight-for-a-large-group-with-pal/): Organize a trip for 10 or more companions with Philippine Airlines group travel under a single PNR. Explore details about the booking process, policies & more
 - [How to Book Flights for Group with JetBlue?](https://airlinesgrouptravel.codeberg.page/blog/how-to-book-flights-for-group-with-jetblue/): Arrange a trip for 10+ passengers traveling together on the same itinerary with the JetBlue group travel option. Learn related terms, booking process & steps
 - [How to Book Cabo Verde Airlines Tickets for a Group?](https://airlinesgrouptravel.codeberg.page/blog/how-to-book-cabo-verde-airlines-tickets-for-a-group/): Book tickets for 10 or more passengers with Cabo Verde Airlines Group Travel services under a single itinerary. Learn about its booking process, perks, and more
 - [How Can I Book a Group Flight on Ethiopian Airlines?](https://airlinesgrouptravel.codeberg.page/blog/how-can-i-book-a-group-flight-on-ethiopian-airlines/): Curate an air expedition for multiple companions with Ethiopian Airlines group travel under a single PNR. Learn more about its booking process, policies & more
