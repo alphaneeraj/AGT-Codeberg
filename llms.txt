@@ -24,6 +24,7 @@ Key facts:
 ## Blog
 
 - [Group Travel Blog](https://airlinesgrouptravel.codeberg.page/blog/): Group travel tips, airline group booking guides and planning advice for teams, weddings, companies and schools from Airlines Group Travel.
+- [How Can I Book a Group Flight Ticket on Flynas?](https://airlinesgrouptravel.codeberg.page/blog/how-can-i-book-a-group-flight-ticket-on-flynas/): Book simple and convenient shared trips with Flynas Group Travel for 10 or more passengers in a single PNR. Learn about its booking process, policies, and more
 - [How Can I Book a Group Flight Ticket with Flybondi?](https://airlinesgrouptravel.codeberg.page/blog/how-can-i-book-a-group-flight-ticket-with-flybondi/): Find a comprehensive Flybondi Group Booking process via the official website under a single flight segment. Know Flybondi group travel benefits, deals, and more
 - [How to Book Group Flights on Korean Air?](https://airlinesgrouptravel.codeberg.page/blog/how-to-book-group-flights-on-korean-air/): Book a flight ticket for Korean Air group travel on the same flight to a common destination. Learn more about its booking process, terms and conditions and more
 - [How Can I Book a Group Flight with Swiss Air?](https://airlinesgrouptravel.codeberg.page/blog/how-can-i-book-a-group-flight-with-swiss-air/): Curate a travel plan for a group; book a flight for more than 9 people with Swiss Air group booking under a single itinerary by knowing its policies, and more
