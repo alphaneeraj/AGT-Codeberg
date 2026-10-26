@@ -818,14 +818,38 @@ def render_admin():
 # push, then click "Rebuild all pages" in /admin/ → Blog.
 # ---------------------------------------------------------------------------
 
+# Google "Preferred sources" button (official): https://developers.google.com/search/docs/appearance/preferred-sources
+# publisher.js renders Google's own badge into the div; <noscript> falls back to Google's deeplink.
+PREFERRED_SOURCE_SCRIPT = '\n<script async src="https://news.google.com/swg/js/v1/publisher.js"></script>'
+PREFERRED_SOURCE_LINK = "https://www.google.com/preferences/source?q=" + SITE["url"].replace("https://", "")
+
+
+def sidebar(recent=""):
+    return f"""<aside class="blog-sidebar" aria-label="Blog sidebar">
+      <div class="card side-card pref-source">
+        <h2>Follow us on Google</h2>
+        <p>Add {SITE['name']} as a preferred source to see more of our group travel guides in Google Search.</p>
+        <div google-add-preferred-source-btn data-theme="light" data-lang="en"></div>
+        <noscript><a href="{PREFERRED_SOURCE_LINK}" rel="noopener" target="_blank">Add as a preferred source on Google</a></noscript>
+      </div>
+      <div class="card side-card side-cta">
+        <h2>Group of 10+ travelers?</h2>
+        <p>Get a free group flight quote from our specialists, 24/7.</p>
+        <a class="btn btn-primary" href="tel:{SITE['phone_tel']}">📞 {SITE['phone']}</a>
+        <a class="btn btn-navy" href="/contact/#quote">Request a quote</a>
+      </div>{recent}
+    </aside>"""
+
+
 BLOG_PAGE = {"path": "blog/", "nav": None, "title": "Group Travel Blog – Tips & Guides | Airlines Group Travel",
              "h1": "Group Travel Blog", "type": "CollectionPage",
              "lead": "Tips, airline group-booking guides and ideas for planning trips for 10+ travelers.",
              "desc": "Group travel tips, airline group booking guides and planning advice for teams, weddings, companies and schools from Airlines Group Travel.",
-             "body": """
+             "body": f"""
 <section class="block">
-  <div class="wrap">
-    <div class="grid post-grid">{{POST_LIST}}</div>
+  <div class="wrap blog-layout">
+    <div class="grid post-grid">{{{{POST_LIST}}}}</div>
+    {sidebar()}
   </div>
 </section>""", "priority": "0.8"}
 
@@ -836,29 +860,32 @@ def post_template():
 <meta property="article:published_time" content="{{PUBLISHED_ISO}}">
 <meta property="article:modified_time" content="{{MODIFIED_ISO}}">
 <meta property="article:author" content="{{AUTHOR}}">{{ARTICLE_TAGS}}
-<script type="application/ld+json">{{JSONLD}}</script>"""
+<script type="application/ld+json">{{JSONLD}}</script>""" + PREFERRED_SOURCE_SCRIPT
     return f"""{head(page, schema=False, og_type="article", image="{{IMAGE}}", image_alt="{{IMAGE_ALT}}", extra=extra)}
 <body>
 {header('blog/')}
 <nav class="breadcrumbs" aria-label="Breadcrumb"><div class="wrap"><ol><li><a href="{SITE['url']}/">Home</a></li><li><a href="{SITE['url']}/blog/">Blog</a></li><li aria-current="page">{{{{H1}}}}</li></ol></div></nav>
 <main id="main">
 <article class="post">
-  <header class="page-hero"><div class="wrap narrow">
+  <header class="page-hero"><div class="wrap">
     <p class="post-kicker">{{{{KICKER}}}}</p>
     <h1>{{{{H1}}}}</h1>
     <p class="post-meta">By {{{{AUTHOR}}}} · <time datetime="{{{{PUBLISHED_ISO}}}}">{{{{DATE_HUMAN}}}}</time>{{{{UPDATED_HTML}}}} · {{{{READ_MIN}}}} min read</p>
   </div></header>
-  <div class="wrap narrow post-wrap">
-    {{{{COVER}}}}
-    <div class="prose post-body">
+  <div class="wrap blog-layout post-wrap">
+    <div class="post-main">
+      {{{{COVER}}}}
+      <div class="prose post-body">
 {{{{CONTENT}}}}
+      </div>
+      {{{{TAGS_HTML}}}}
+      <aside class="card post-cta">
+        <h2>Planning group travel?</h2>
+        <p>Get a free group flight quote for 10+ travelers from our specialists, 24/7.</p>
+        <p><a class="btn btn-primary" href="tel:{SITE['phone_tel']}">📞 Call {SITE['phone']}</a> <a class="btn btn-navy" href="/contact/#quote">Request a quote</a></p>
+      </aside>
     </div>
-    {{{{TAGS_HTML}}}}
-    <aside class="card post-cta">
-      <h2>Planning group travel?</h2>
-      <p>Get a free group flight quote for 10+ travelers from our specialists, 24/7.</p>
-      <p><a class="btn btn-primary" href="tel:{SITE['phone_tel']}">📞 Call {SITE['phone']}</a> <a class="btn btn-navy" href="/contact/#quote">Request a quote</a></p>
-    </aside>
+    {sidebar("{{SIDEBAR_RECENT}}")}
   </div>
 </article>
 {{{{RELATED}}}}
@@ -872,7 +899,7 @@ def post_template():
 
 
 def blog_index_template():
-    extra = '\n<script type="application/ld+json">{{BLOG_JSONLD}}</script>'
+    extra = '\n<script type="application/ld+json">{{BLOG_JSONLD}}</script>' + PREFERRED_SOURCE_SCRIPT
     return render(BLOG_PAGE, extra=extra)
 
 

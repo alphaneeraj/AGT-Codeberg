@@ -253,3 +253,23 @@ table.leads select, table.leads input { font-size: .85rem; padding: 6px 8px; }
 .seo-check li.ok { color: var(--ok); }
 .seo-check li.todo { color: var(--muted); }
 .editor-actions { display: grid; gap: 8px; }
+
+/* Blog layout with sidebar */
+.blog-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 36px; align-items: start; }
+.blog-layout .post-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.post-main { min-width: 0; }
+.blog-sidebar { display: grid; gap: 16px; position: sticky; top: 84px; }
+.side-card { padding: 18px; box-shadow: none; }
+.side-card h2 { font-size: 1.05rem; margin-bottom: .5em; }
+.side-card p { font-size: .92rem; color: var(--muted); margin-bottom: .8em; }
+.side-cta .btn { width: 100%; margin-top: 8px; }
+.pref-source { border-color: #c9dcff; }
+.pref-source [google-add-preferred-source-btn] { min-height: 40px; }
+.side-recent ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.side-recent a { font-weight: 600; text-decoration: none; line-height: 1.35; display: block; }
+.side-recent a:hover { text-decoration: underline; }
+.side-recent small { color: var(--muted); }
+@media (max-width: 960px) {
+  .blog-layout { grid-template-columns: 1fr; }
+  .blog-sidebar { position: static; }
+}

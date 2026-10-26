@@ -493,10 +493,19 @@
       COVER: p.image ? "<figure class='post-cover'><img src='" + esc(p.image) + "' alt='" + esc(p.imageAlt || p.title) + "' fetchpriority='high' decoding='async'></figure>" : "",
       CONTENT: p.content,
       TAGS_HTML: tags.length ? "<ul class='tag-list' aria-label='Tags'>" + tags.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>" : "",
+      SIDEBAR_RECENT: sidebarRecent(p),
       RELATED: related.length ? "<section class='block alt'><div class='wrap'><h2>More from the blog</h2><div class='grid post-grid'>" +
         related.map(function (r) { return card(r, "h3"); }).join("") + "</div></div></section>" : "",
       JSONLD: safeJson(graph)
     });
+  }
+
+  function sidebarRecent(p) {
+    var recent = published().filter(function (x) { return x.slug !== p.slug; }).slice(0, 5);
+    if (!recent.length) return "";
+    return "\n      <div class='card side-card side-recent'><h2>Latest posts</h2><ul>" + recent.map(function (r) {
+      return "<li><a href='/blog/" + esc(r.slug) + "/'>" + esc(r.title) + "</a><small>" + esc(humanDate(r.date)) + "</small></li>";
+    }).join("") + "</ul></div>";
   }
 
   function renderIndex(list) {
